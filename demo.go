@@ -20,6 +20,6 @@ func main() {
 		Name:            "测试聊天室",
 		ApplyJoinOption: "FreeAccess",
 	})
-	fmt.Printf("创建房间结果：%x,%+v\n", err, ans)
+	fmt.Printf("创建房间结果：%v,%+v\n", err, ans)
 
 }

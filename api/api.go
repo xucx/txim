@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
 
@@ -38,10 +39,7 @@ type GroupCreateReq struct {
 	ApplyJoinOption string `json:"ApplyJoinOption"`
 }
 type GroupCreateAns struct {
-	ActionStatus string `json:"ActionStatus"`
-	ErrorInfo    string `json:"ErrorInfo"`
-	ErrorCode    int    `json:"ErrorCode"`
-	GroupId      string `json:"GroupId"`
+	GroupId string `json:"GroupId"`
 }
 
 func GroupCreate(r *GroupCreateReq) (*GroupCreateAns, error) {
@@ -66,7 +64,23 @@ func Api(servicename, command string, in, out interface{}) error {
 		return err
 	}
 
-	if err := resp.ToJSON(out); err != nil {
+	respBytes := resp.Bytes()
+
+	errAns := struct {
+		ActionStatus string `json:"ActionStatus"`
+		ErrorInfo    string `json:"ErrorInfo"`
+		ErrorCode    int    `json:"ErrorCode"`
+	}{}
+
+	if err := json.Unmarshal(respBytes, &errAns); err != nil {
+		return err
+	}
+
+	if errAns.ErrorCode != 0 {
+		return fmt.Errorf("ActionStatus:%s,ErrorInfo:%s,ErrorCode:%d", errAns.ActionStatus, errAns.ErrorInfo, errAns.ErrorCode)
+	}
+
+	if err := json.Unmarshal(respBytes, out); err != nil {
 		return err
 	}
 
