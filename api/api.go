@@ -27,7 +27,7 @@ func Init(sdkAppID int, key, identifier string) {
 }
 
 func UserSig(identifier string, expire int) string {
-	sig, _ := tencentyun.GenSig(g.sdkAppID, g.key, g.identifier, expire)
+	sig, _ := tencentyun.GenSig(g.sdkAppID, g.key, identifier, expire)
 	return sig
 }
 
