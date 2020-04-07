@@ -31,6 +31,21 @@ func UserSig(identifier string, expire int) string {
 	return sig
 }
 
+//单个账号导入
+type AccountImportReq struct {
+	Identifier string `json:"Identifier"` //:"test",
+	Nick       string `json:"Nick"`       //:"test",
+	FaceUrl    string `json:"FaceUrl"`    //:"http://www.qq.com"
+}
+type AccountImportAns struct{}
+
+func AccountImport(r *AccountImportReq) (*AccountImportAns, error) {
+	a := AccountImportAns{}
+	err := Api("im_open_login_svc", "account_import", r, &a)
+	return &a, err
+}
+
+//建群
 //https://cloud.tencent.com/document/product/269/1615
 type GroupCreateReq struct {
 	OwnerAccount    string `json:"Owner_Account"`
@@ -48,6 +63,7 @@ func GroupCreate(r *GroupCreateReq) (*GroupCreateAns, error) {
 	return &a, err
 }
 
+//资料设置
 type ProfileSetReq struct {
 	FromAccount string               `json:"From_Account"`
 	ProfileItem []*ProfileSetReqItem `json:"ProfileItem"`
