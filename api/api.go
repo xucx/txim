@@ -48,6 +48,23 @@ func GroupCreate(r *GroupCreateReq) (*GroupCreateAns, error) {
 	return &a, err
 }
 
+type ProfileSetReq struct {
+	FromAccount string               `json:"From_Account"`
+	ProfileItem []*ProfileSetReqItem `json:"ProfileItem"`
+}
+type ProfileSetReqItem struct {
+	Tag   string      `json:"tag"`
+	Value interface{} `json:"value"`
+}
+
+type ProfileSetAns struct{}
+
+func ProfileSet(r *ProfileSetReq) (*ProfileSetAns, error) {
+	a := ProfileSetAns{}
+	err := Api("profile", "portrait_set", r, &a)
+	return &a, err
+}
+
 func Api(servicename, command string, in, out interface{}) error {
 	host := fmt.Sprintf("https://%s/%s/%s/%s", API_HOST, API_VERSION, servicename, command)
 
