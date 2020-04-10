@@ -69,8 +69,8 @@ type ProfileSetReq struct {
 	ProfileItem []*ProfileSetReqItem `json:"ProfileItem"`
 }
 type ProfileSetReqItem struct {
-	Tag   string      `json:"tag"`
-	Value interface{} `json:"value"`
+	Tag   string      `json:"Tag"`
+	Value interface{} `json:"Value"`
 }
 
 type ProfileSetAns struct{}
