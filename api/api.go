@@ -45,6 +45,51 @@ func AccountImport(r *AccountImportReq) (*AccountImportAns, error) {
 	return &a, err
 }
 
+//账号查询
+type AccountCheckReq struct {
+	CheckItem []*AccountCheckReqItem `json:"CheckItem"`
+}
+type AccountCheckReqItem struct {
+	UserID string `json:"UserID"`
+}
+type AccountCheckAns struct {
+	ResultItem []*AccountCheckAnsItem `json:"ResultItem"`
+}
+type AccountCheckAnsItem struct {
+	UserID        string `json:"UserID"`
+	ResultCode    int    `json:"ResultCode"`
+	ResultInfo    string `json:"ResultInfo"`
+	AccountStatus string `json:"AccountStatus"`
+}
+
+func AccountCheck(r *AccountCheckReq) (*AccountCheckAns, error) {
+	a := AccountCheckAns{}
+	err := Api("im_open_login_svc", "account_check", r, &a)
+	return &a, err
+}
+
+//账号删除
+type AccountDeleteReq struct {
+	DeleteItem []*AccountDeleteReqItem `json:"DeleteItem"`
+}
+type AccountDeleteReqItem struct {
+	UserID string `json:"UserID"`
+}
+type AccountDeleteAns struct {
+	ResultItem []*AccountDeleteAnsItem `json:"ResultItem"`
+}
+type AccountDeleteAnsItem struct {
+	UserID     string `json:"UserID"`
+	ResultCode int    `json:"ResultCode"`
+	ResultInfo string `json:"ResultInfo"`
+}
+
+func AccountDelete(r *AccountDeleteReq) (*AccountDeleteAns, error) {
+	a := AccountDeleteAns{}
+	err := Api("im_open_login_svc", "account_delete", r, &a)
+	return &a, err
+}
+
 //建群
 //https://cloud.tencent.com/document/product/269/1615
 type GroupCreateReq struct {
